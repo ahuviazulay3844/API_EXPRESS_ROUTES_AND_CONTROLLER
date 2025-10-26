@@ -1,6 +1,7 @@
 // db.js
+import express from 'express';
 
-export const  books = [
+export const books = [
     {
       code: 'B001',
       name: 'Mahalal',
@@ -55,7 +56,7 @@ export const  books = [
     },
     {
       code: 'B006',
-      name: 'satul', // ספר מתח נוסף להשלמת ה-6
+      name: 'Silent Scream', // ספר מתח נוסף להשלמת ה-6
       category: 'Suspense',
       price: 85.00,
       isBorrowed: false,
@@ -63,6 +64,3 @@ export const  books = [
     }
   ];
   
-  module.exports = {
-    books
-  };
