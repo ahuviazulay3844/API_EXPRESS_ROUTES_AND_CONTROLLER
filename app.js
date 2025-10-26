@@ -1,11 +1,13 @@
 import express from 'express';
+
+import { books } from './db';
 BASE_URL='http://localhost:5000/books';
 //יוצר שרת
 const app=express();
 // כדי שיצליח לקבל באדי
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-import { books } from './db';
+
 // method: GET בקשת-פעולות 
 //url:http://localhost:5000  
 const port = 5000;
