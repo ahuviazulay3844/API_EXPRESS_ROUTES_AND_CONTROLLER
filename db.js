@@ -1,8 +1,6 @@
 // db.js
-module.exports = {
-    books
-}
-const books = [
+
+export const  books = [
     {
       code: 'B001',
       name: 'Mahalal',
@@ -57,7 +55,7 @@ const books = [
     },
     {
       code: 'B006',
-      name: 'Silent Scream', // ספר מתח נוסף להשלמת ה-6
+      name: 'satul', // ספר מתח נוסף להשלמת ה-6
       category: 'Suspense',
       price: 85.00,
       isBorrowed: false,
