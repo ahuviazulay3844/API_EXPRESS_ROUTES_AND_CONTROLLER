@@ -1,28 +1,24 @@
 import express from 'express';
-import { books } from './db';
-BASE_URL='http://localhost:5000/books';
+import { books } from './db.js';
+//Request (בקשה)
+//Response (תגובה)
 //יוצר שרת
 const app=express();
 // כדי שיצליח לקבל באדי
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// method: GET בקשת-פעולות 
-//url:http://localhost:5000  
-const port = 5000;
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-});
+
 //http://localhost:5000/books
 //מחזיר את כל הספרים
 app.get('/books',(req, res)=>{//req-לבקש בקשה,res-להחזיר
-res.json("/books")
+res.json(books)
 });
 
 //http://localhost:5000/books/id
 //מחזיר את כל הספרים
-app.get('/books/:id',(req, res)=>{//req-לבקש בקשה,res-להחזיר
-const b=books.find(x=>x.code==req.query.code);
+app.get('/books/:code',(req, res)=>{//req-לבקש בקשה,res-להחזיר
+const b=books.find(x=>x.code==req.params.code);
 res.json(b)//מחזיר את הספר
 });
 // method: POST בקשת
@@ -36,7 +32,7 @@ app.post('/books', (req, res) => {
 // method: put בקשת
 // url: http://localhost:5000/books/:code
 app.put('/books/:code', (req, res) => {
-    const code =res.params.code; // הקוד שמגיע ב־URL
+    const code =req.params.code; // הקוד שמגיע ב־URL
     const { price } = req.body;   // המחיר החדש מבקשת ה־body
   
     const bookIndex = books.findIndex(book => book.code === code);
@@ -44,13 +40,62 @@ app.put('/books/:code', (req, res) => {
       return res.status(404).json({ message: 'Book not found' });
     }
     books[bookIndex].price = price; // עדכון המחיר
-    res.send(req.body);
+    // res.send(req.body);
   
     res.json(books[bookIndex]); // מחזיר את הספר המעודכן
   });
   //השאלת ספר
+  // url: http://localhost:5000/books/borrow/:code
+
   app.put('/books/borrow/:code', (req, res) => {
-    const bookCode = req.params.code;
-    const { customerCode } = req.body;})
+    const bookCode = req.query.code;
+    const { customerCode } = req.body;
   const bookt = books.findindex(b => b.code === bookCode);
-  books[bookt].isBorrowed=true;
+  const book = books[bookt];
+  if (bookt === -1) {
+    return res.status(404).json({ message: 'Book not found' });
+}
+  if (books[bookt].isBorrowed) {
+    return res.status(400).json({ message: 'Book is currently borrowed and cannot be re-borrowed.'
+})
+};
+// 3. ביצוע ההשאלה: עדכון השדה isBorrowed
+book.isBorrowed = true;
+
+const today = new Date().toISOString().split('T')[0];
+
+// 4. עדכון מערך ההשאלות (borrowingHistory)
+book.borrowingHistory.push({
+    dateBorrowed: today,
+    customerCode: customerCode
+});
+
+
+
+res.json({ message: 'Book successfully borrowed', updatedBook: book });
+});
+
+
+
+// 7. PUT /books/return/:code:ת ספרחזרה
+app.put('/books/return/:code', (req, res) => {
+    const bookCode = req.params.code;
+
+    const bookIndex = books.findIndex(b => b.code === bookCode);
+
+    if (bookIndex === -1) {
+        return res.status(404).json({ message: 'Book not found' });
+    }
+
+    const book = books[bookIndex];
+
+    // בדיקה: אם הספר אינו מושאל?
+    if (!book.isBorrowed) {
+        return res.status(400).json({ message: 'Book is not currently borrowed.' });
+    }
+
+    // ביצוע החזרה: עדכון isBorrowed ל-false
+    book.isBorrowed = false;
+
+    res.json({ message: 'Book successfully returned', updatedBook: book });
+});
