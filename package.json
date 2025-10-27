@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "app1":"node --watch app.js "
+    "start": "node --watch app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "expres": "^0.0.5"
-  }
+  "express": "^4.18.2"
+}
+
 }
