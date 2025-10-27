@@ -99,3 +99,29 @@ app.put('/books/return/:code', (req, res) => {
 
     res.json({ message: 'Book successfully returned', updatedBook: book });
 });
+
+// 8. DELETE /books/:code: מחיקת ספר
+app.delete('/books/:code', (req, res) => {
+    //בעצם מה שקולט הקוד
+    const bookCode = req.params.code;
+
+    const bookIndex = books.findIndex(b => b.code === bookCode);
+
+    if (bookIndex === -1) {
+        return res.status(404).json({ message: 'Book not found' });
+    }
+    
+    // מחיקת הספר מהמערך באמצעות splice
+    const deletedBook = books.splice(bookIndex, 1);
+
+    // מחזיר סטטוס 204 No Content או הודעת הצלחה
+    res.status(200).json({ message: `Book with code ${bookCode} successfully deleted.`, deletedBook: deletedBook[0] });
+});
+// BASE_URL='http://localhost:5000/books';
+//החזרה  
+// method: GET בקשת-פעולות 
+//url:http://localhost:5000  
+const port = 5000;
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+});
