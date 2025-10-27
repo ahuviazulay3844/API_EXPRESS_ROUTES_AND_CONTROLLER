@@ -25,8 +25,13 @@ res.json(b)//מחזיר את הספר
 // url: http://localhost:5000/books
 //הוספת ספר
 app.post('/books', (req, res) => {
-    books.push(req.body)
-    res.send(req.body);
+    const newBook = {
+        code: `B${books.length + 1}`, // קוד אוטומטי
+        isBorrowed: false, // ברירת מחדל
+        borrowingHistory: [], // ברירת מחדל
+        ...req.body //מכניס נתונים..
+    };
+    books.push(newBook);
 });
 //עידכון
 // method: put בקשת
@@ -109,8 +114,7 @@ app.delete('/books/:code', (req, res) => {
 
     if (bookIndex === -1) {
         return res.status(404).json({ message: 'Book not found' });
-    }
-    
+    } 
     // מחיקת הספר מהמערך באמצעות splice
     const deletedBook = books.splice(bookIndex, 1);
 
