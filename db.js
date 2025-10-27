@@ -1,5 +1,4 @@
 // db.js
-import express from 'express';
 
 export const books = [
     {

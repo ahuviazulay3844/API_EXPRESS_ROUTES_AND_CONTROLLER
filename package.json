@@ -8,9 +8,9 @@
     "start": "node --watch app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "ahuvi",
   "license": "ISC",
-  "description": "",
+  "description": "lesson4",
   "dependencies": {
-    "express": "^4.18.2"  }
+  "express": "^5.1.0"  }
 }

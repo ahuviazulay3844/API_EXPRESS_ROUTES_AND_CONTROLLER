@@ -15,16 +15,16 @@ app.listen(port, () => {
 });
 //http://localhost:5000/books
 //מחזיר את כל הספרים
-app.get('/books',(req, res))//req-לבקש בקשה,res-להחזיר
+app.get('/books',(req, res)=>{//req-לבקש בקשה,res-להחזיר
 res.json("/books")
-
+});
 
 //http://localhost:5000/books/id
 //מחזיר את כל הספרים
-app.get('/books/:id',(req, res))//req-לבקש בקשה,res-להחזיר
+app.get('/books/:id',(req, res)=>{//req-לבקש בקשה,res-להחזיר
 const b=books.find(x=>x.code==req.query.code);
 res.json(b)//מחזיר את הספר
-
+});
 // method: POST בקשת
 // url: http://localhost:5000/books
 //הוספת ספר
@@ -36,7 +36,7 @@ app.post('/books', (req, res) => {
 // method: put בקשת
 // url: http://localhost:5000/books/:code
 app.put('/books/:code', (req, res) => {
-    const code =B006; // הקוד שמגיע ב־URL
+    const code =res.params.code; // הקוד שמגיע ב־URL
     const { price } = req.body;   // המחיר החדש מבקשת ה־body
   
     const bookIndex = books.findIndex(book => book.code === code);
@@ -48,4 +48,9 @@ app.put('/books/:code', (req, res) => {
   
     res.json(books[bookIndex]); // מחזיר את הספר המעודכן
   });
-  
+  //השאלת ספר
+  app.put('/books/borrow/:code', (req, res) => {
+    const bookCode = req.params.code;
+    const { customerCode } = req.body;})
+  const bookt = books.findindex(b => b.code === bookCode);
+  books[bookt].isBorrowed=true;
