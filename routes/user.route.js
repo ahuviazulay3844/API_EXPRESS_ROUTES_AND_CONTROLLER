@@ -7,4 +7,4 @@ router.post('/sign_in', sign_in);
 router.get('/', getAllUsers);
 
 
-export default users.route
+export default router;
