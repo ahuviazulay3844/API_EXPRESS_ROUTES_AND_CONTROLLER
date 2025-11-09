@@ -1,6 +1,6 @@
 // db.js
 
-export const books = [
+export const  books = [
     {
       code: 'B001',
       name: 'Mahalal',

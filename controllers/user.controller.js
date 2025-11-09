@@ -1,6 +1,7 @@
-import { users } from "../db1";
+import { users } from "../db1.js";
 
-export const sign_up=(req, res)=>{
+
+export const sign_up=(req,res,next)=>{
     const {code, username, email, password,borrowedBooks } = req.body;
     // בדיקה אם המשתמש כבר קיים (לפי אימייל)
     const existingUser = users.find(u => u.code === code);
@@ -17,7 +18,7 @@ export const sign_up=(req, res)=>{
     users.push(newUser);
 
 }
-export const sign_in=(req, res)=>{
+export const sign_in=(req,res,next)=>{
     const { email, password } = req.body;
     const user=users.find(x=>x.email==email)
     if (!user) {
@@ -28,7 +29,7 @@ export const sign_in=(req, res)=>{
     }
     res.json( `hello ${user.username} ${user.email}` );
 }
-export const getAllUsers=(req, res)=>{
+export const getAllUsers=(req,res,next)=>{
     try {
         res.json(users);
     } catch (error) {

@@ -1,4 +1,4 @@
-import {books} from './db'
+import {books} from './db.js'
 
 export const users = [
   {

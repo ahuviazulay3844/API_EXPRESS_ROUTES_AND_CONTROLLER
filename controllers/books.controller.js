@@ -1,4 +1,4 @@
-import { books } from "../db";
+import { books } from "../db.js";
 
 
 // הראוטר יכיל את כל הניתובים ששייכים למשאב מסוים
@@ -7,19 +7,19 @@ import { books } from "../db";
 // http://localhost:3000/products
 //http://localhost:5000/books
 //מחזיר את כל הספרים
-const getAllBooks =(req, res)=>{//req-לבקש בקשה,res-להחזיר
+export const getAllBooks =(req,res,next)=>{//req-לבקש בקשה,res-להחזיר
     res.json(books)
     };
     //http://localhost:5000/books/id
     //מחזיר את כל הספרים
-    const getBookById =(req, res)=>{//req-לבקש בקשה,res-להחזיר
+ export const getBookById =(req,res,next)=>{//req-לבקש בקשה,res-להחזיר
     const b=books.find(x=>x.code==req.params.code);
     res.json(b)//מחזיר את הספר
     };
     // method: POST בקשת
     // url: http://localhost:5000/books
     //הוספת ספר
-    const addBook =(req, res) => {
+  export const addBook =(req,res,next) => {
         const newBook = {
             code: `B${books.length + 1}`, // קוד אוטומטי
             isBorrowed: false, // ברירת מחדל
@@ -31,7 +31,7 @@ const getAllBooks =(req, res)=>{//req-לבקש בקשה,res-להחזיר
     //עידכון
     // method: put בקשת
     // url: http://localhost:5000/books/:code
-    const updateBook = (req, res) => {
+ export  const updateBook = (req,res,next) => {
         const code =req.params.code; // הקוד שמגיע ב־URL
         const { price } = req.body;   // המחיר החדש מבקשת ה־body
         const bookIndex = books.findIndex(book => book.code === code);
@@ -44,7 +44,7 @@ const getAllBooks =(req, res)=>{//req-לבקש בקשה,res-להחזיר
       };
       //השאלת ספר
       // url: http://localhost:5000/books/borrow/:code
-      const borrowingabook  =(req, res) => {
+ export  const borrowingabook  =(req,res,next) => {
         const bookCode = req.query.code;
         const { customerCode } = req.body;
       const bookt = books.findindex(b => b.code === bookCode);
@@ -67,7 +67,7 @@ const getAllBooks =(req, res)=>{//req-לבקש בקשה,res-להחזיר
     res.json({ message: 'Book successfully borrowed', updatedBook: book });
     };
     // 7. PUT /books/return/:code:ת ספרחזרה
-    const  Returningabook  = (req, res) => {
+export const  Returningabook  = (req,res,next) => {
         const bookCode = req.params.code;
         const bookIndex = books.findIndex(b => b.code === bookCode);
     
@@ -89,7 +89,7 @@ const getAllBooks =(req, res)=>{//req-לבקש בקשה,res-להחזיר
     };
     
     // 8. DELETE /books/:code: מחיקת ספר
-    const deleteBook =(req, res) => {
+export const deleteBook =(req,res,next) => {
         //בעצם מה שקולט הקוד
         const bookCode = req.params.code;
     

@@ -4,7 +4,7 @@
      * @param {import("express").Response} res response data
      * @param {import("express").NextFunction} next function to move to the next middleware
      */
- const Printmiddlewares = (req, res, next) => {
+ export const Printmiddlewares = (req, res, next) => {
    if (req.messege==="GET") {
     console.log(req.currentDate)
    } 
