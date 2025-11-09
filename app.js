@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/books', bookrouter);
 app.use('/users', DateMiddleware,useroute);
+app.use(UrlerrorHandler);
+app.use(errorHandler);
 // BASE_URL='http://localhost:5000/books';
 //החזרה  
 // method: GET בקשת-פעולות 
