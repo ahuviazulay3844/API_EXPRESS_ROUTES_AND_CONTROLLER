@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import { books } from './db.js';
-import  bookrouter from "./routes/book.route.js"
-import useroute from "./routes/user.route.js"
+import  bookrouter from "./routes/book.route.js";
+import useroute from "./routes/user.route.js";
 //Request (בקשה)
 //Response (תגובה)
 //יוצר שרת
@@ -10,7 +10,8 @@ const app=express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use('/books', bookrouter);
+app.use('/users', useroute);
 // BASE_URL='http://localhost:5000/books';
 //החזרה  
 // method: GET בקשת-פעולות 
@@ -19,5 +20,3 @@ const port = 5000;
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
-app.use('/books', bookrouter);
-app.use('/users', useroute);
