@@ -1,6 +1,4 @@
 import { books } from "../db.js";
-
-
 // הראוטר יכיל את כל הניתובים ששייכים למשאב מסוים
 // resource - משאב
 // URL - מושפע משם המשאב בד"כ ברבים
@@ -20,6 +18,7 @@ export const getAllBooks =(req,res,next)=>{//req-לבקש בקשה,res-להחז�
     // url: http://localhost:5000/books
     //הוספת ספר
   export const addBook =(req,res,next) => {
+    res.send('addBook');
         const newBook = {
             code: `B${books.length + 1}`, // קוד אוטומטי
             isBorrowed: false, // ברירת מחדל
@@ -32,6 +31,7 @@ export const getAllBooks =(req,res,next)=>{//req-לבקש בקשה,res-להחז�
     // method: put בקשת
     // url: http://localhost:5000/books/:code
  export  const updateBook = (req,res,next) => {
+    res.send('updateBook');
         const code =req.params.code; // הקוד שמגיע ב־URL
         const { price } = req.body;   // המחיר החדש מבקשת ה־body
         const bookIndex = books.findIndex(book => book.code === code);

@@ -3,14 +3,20 @@ import  {books} from './db.js';
 import  {users} from './db1.js';
 import { DateMiddleware } from "./middlewares/Date.middlewares.js";
 import { errorHandler } from './middlewares/error.middlewares.js';
-import { UrlerrorHandler } from './middlewares/Url.Error.middlewares.js';
+import { UrlerrorHandler } from './middlewares/error.middlewares.js'
 import  bookrouter from "./routes/book.route.js";
 import useroute from "./routes/user.route.js";
 import { Printmiddlewares } from './middlewares/Print.middlewares.js';
+import cors from "cors";
+import { validateUseBooks } from './models/books.model.js';
+import { validateUser } from './models/user.model.js';
+
 //Request (בקשה)
 //Response (תגובה)
 //יוצר שרת
 const app=express();
+app.use(cors());//נותן גישה לCLIENT
+app.use(morgan('dev'));
 // כדי שיצליח לקבל באדי
 app.use(express.json());
 app.use('/books', bookrouter);
