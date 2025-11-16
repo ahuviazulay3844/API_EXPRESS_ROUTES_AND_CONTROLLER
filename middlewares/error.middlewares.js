@@ -16,3 +16,14 @@ export const errorHandler = (err, req, res, next) => {
     res.status(stat).json({ error: { type: message } });
     // next - אין צורך כי מחזירים תגובה בוודאות ללקוח
 };
+/**
+ * error handling middleware
+ * @param {{ status?: number, message?: string }} err error data
+ * @param {import("express").Request} req request data
+ * @param {import("express").Response} res response data
+ * @param {import("express").NextFunction} next function to move to the next middleware
+ */
+export const UrlerrorHandler = ( req, res, next) => {
+   next({ status: 404, message: `url ${req.url} method: ${req.method} not found!` });
+
+};
