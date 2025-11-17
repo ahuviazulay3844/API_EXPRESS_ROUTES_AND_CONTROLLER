@@ -7,7 +7,7 @@ export const joiValidator=(schema)=>{
     // מחזיר מידלוואר
     // const joiMid = (req, res, next) => {
         return (req, res, next) => {
-            const { value, error, warning } = schema.validate(req.body);
+            const { value, error, warning } = schema.validate(req.body,{ convert: false });
             // value - ערך אחרי בדיקת תקינות/המרה, אם לא חוקי מוחזר אוביקט ריק
             // error - תיאור השגיאה כמחרוזת
             // warning? - אזהרות אם הגדרנו

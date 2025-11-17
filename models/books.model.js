@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { updateBook } from '../controllers/books.controller';
 export const validateUseBooks = {
     // user login (email, password)
     addBook : Joi.object({
@@ -11,5 +10,8 @@ export const validateUseBooks = {
     name: Joi.string().min(2).max(100).required(),
     category: Joi.string().min(2).max(50).required(),
     price: Joi.number().integer().min(1).required()
-    })
+    }),
+    borrowBook: Joi.object({
+        id_cust: Joi.string().min(1).required() 
+    }),
 };

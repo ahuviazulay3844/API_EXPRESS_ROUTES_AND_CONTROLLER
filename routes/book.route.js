@@ -1,6 +1,8 @@
 
 import { Router } from "express";
 import { getAllBooks,getBookById,Returningabook,borrowingabook,deleteBook,updateBook,addBook } from "../controllers/books.controller.js";
+import { joiValidator } from "../middlewares/joi-validator.middleware.js"; 
+import { validateUseBooks } from "../models/books.model.js";
 
 const router = Router();
 
@@ -14,13 +16,11 @@ router.get('/:id', getBookById);
 
 // method: POST בקשת
 // url: http://localhost:3000/Books
-router.post('/', addBook);
-
-router.put('/:id', updateBook);
-
+router.post('/', joiValidator(validateUseBooks.addBook), addBook);
+router.put('/:id', joiValidator(validateUseBooks.updateBook), updateBook);
 router.delete('/:id', deleteBook);
-router.put('/borrow/:code',borrowingabook);
-router.put('/books/return/:code',Returningabook);
+router.put('/borrow/:code', joiValidator(validateUseBooks.borrowBook), borrowingabook);
+router.put('/return/:code',Returningabook);
 
 
 export default router;
