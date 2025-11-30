@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi, { date, string, types } from 'joi';
 export const validateUseBooks = {
     // user login (email, password)
     addBook : Joi.object({
@@ -15,3 +15,16 @@ export const validateUseBooks = {
         id_cust: Joi.string().min(1).required() 
     }),
 };
+// 1. יצירת סכמה שהיא תבנית לאוביקט בודד בטבלה
+const bookSchema = new Schema({
+    _id: Schema.Types.ObjectId,
+    name:{type:string,unique:true},
+    category:{type:string,unique:true},
+    price: Number,
+
+    borrowingHistory: [{ // אוביקט שמכיל את כל השדות שצריכים של היוזר
+        customerCode:{type:string},
+        dateBorrowed:{type:date}
+    }]
+
+});
