@@ -8,13 +8,23 @@ import cors from "cors";
 import  {validateUseBooks}  from './models/books.model.js';
 import {validateUser} from "./models/user.model.js";
 import morgan from 'morgan';
-      
+import { connectDB } from './config/db3.js'; // נניח ש-connectDB נמצא כאן
+import { config } from 'dotenv';
+
+
 //Request (בקשה)
 //Response (תגובה)
+
 //יוצר שרת
 const app=express();
+
+// .env-קורא את כל קבצי ה
+// process.env ומכניס את הערכים כאוביקט לתוך
+config();
 // כדי שיצליח לקבל באדי
 app.use(express.json());
+// התחברות לדטהבייס
+connectDB();
 // app.use(fileUpload({
 //     // הגבלת גודל: 1 מגה-בייט (1MB = 1024 * 1024 בתים)
 //     limits: { fileSize: 1 * 1024 * 1024 }, 
