@@ -1,5 +1,35 @@
 import Joi from 'joi';
-export  const validateUser = {
+import { model, Schema } from 'mongoose';
+import bcrypt from 'bcryptjs';
+
+
+// אוסף משתמשים בדטהבייס
+
+const userSchema = new Schema({
+    username: String,
+    email: String,
+    password:String ,  
+   // repeat_password: String,
+    code: String,
+    borrowedBooks: Array,
+});
+// DB-פונקציה שמתבצעת לפני שמירה ב
+// DB-ניתן לשלוח מערך של פעולות על ה
+// חובה להגדיר את הפונקציה כך ולא כפונקצית חץ
+// this-כי יש שימוש ב
+// וזיס מתנהג בצורה שונה בפונקצית חץ
+//להצפנה 
+userSchema.pre('save', function () {
+    // this - מקבל את האוביקט שהולך להישמר עכשיו בדטהבייס
+    //TODO-כאן עושים פעולות
+    //הסולט צריך להגיע ממשתני סביבה
+    //צריך לבדוק האם שינינו את הסיסמא
+    const salt = bcrypt.genSaltSync(12);
+    const hash = bcrypt.hashSync(this.password, salt);
+    this.password = hash;
+});
+
+export const validateUser = {
     // user login (email, password)
     login: Joi.object({
         email: Joi.string().email().required(),
@@ -12,8 +42,9 @@ export  const validateUser = {
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
         repeat_password: Joi.ref('password'),
         // phone: Joi.string().pattern(/^0?(([23489]{1}[0-9]{7})|[57]{1}[0-9]{8})+$/).required(),
-        code: Joi.string().optional(),     
-       borrowedBooks: Joi.array().optional()
+        code: Joi.string().optional(),
+        borrowedBooks: Joi.array().optional()
     })
     // user update password (old_password, password, repeat_password)
 };
+export const User = model('User', userSchema);

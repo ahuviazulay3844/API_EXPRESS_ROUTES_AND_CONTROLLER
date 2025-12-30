@@ -25,6 +25,7 @@ config();
 app.use(express.json());
 // התחברות לדטהבייס
 connectDB();
+
 // app.use(fileUpload({
 //     // הגבלת גודל: 1 מגה-בייט (1MB = 1024 * 1024 בתים)
 //     limits: { fileSize: 1 * 1024 * 1024 }, 
